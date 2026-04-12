@@ -12,11 +12,15 @@
 </head>
 
 <body>
+    <div class="custom-cursor"></div>
+    <div class="cursor-dot"></div>
+    <div class="scroll-progress" id="scroll-progress"></div>
     <div class="scroll-dots">
         <a href="#home" class="dot active"></a>
         <a href="#about" class="dot"></a>
         <a href="#skills" class="dot"></a>
         <a href="#projects" class="dot"></a>
+        <a href="#impact" class="dot"></a>
         <a href="#contact" class="dot"></a>
     </div>
 
@@ -40,7 +44,9 @@
 
     <nav id="navbar">
         <div class="container">
-            <a href="#" class="logo">ABHISHEK<span>.</span></a>
+            <a href="#" class="logo">
+                <img src="logo.png" alt="Abhishek Luhar" class="nav-logo-img">
+            </a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -127,7 +133,7 @@
     <section id="skills" class="container reveal">
         <h2>Technical <span class="text-gradient">Arsenal</span></h2>
         <div class="skills-grid">
-            <div class="skill-category glass">
+            <div class="skill-category glass reveal reveal-delay-1">
                 <h3><i class="fas fa-code"></i> Front-End</h3>
                 <div class="skill-tags">
                     <span class="skill-tag">HTML5</span>
@@ -137,7 +143,7 @@
                     <span class="skill-tag">Bootstrap</span>
                 </div>
             </div>
-            <div class="skill-category glass">
+            <div class="skill-category glass reveal reveal-delay-2">
                 <h3><i class="fas fa-server"></i> Back-End</h3>
                 <div class="skill-tags">
                     <span class="skill-tag">Node JS</span>
@@ -145,7 +151,7 @@
                     <span class="skill-tag">Python</span>
                 </div>
             </div>
-            <div class="skill-category glass">
+            <div class="skill-category glass reveal reveal-delay-3">
                 <h3><i class="fas fa-database"></i> Database</h3>
                 <div class="skill-tags">
                     <span class="skill-tag">MySQL</span>
@@ -169,7 +175,7 @@
     <section id="projects" class="container reveal">
         <h2>Featured <span class="text-gradient">Projects</span></h2>
         <div class="projects-grid">
-            <a href="https://github.com/Abhishek-0904/Handwritten.AI" target="_blank" class="project-card glass"
+            <a href="https://github.com/Abhishek-0904/Handwritten.AI" target="_blank" class="project-card glass reveal reveal-delay-1"
                 style="text-decoration: none; color: inherit; display: block;">
                 <div class="project-img">
                     <i class="fas fa-pen-nib"></i>
@@ -185,7 +191,7 @@
                         handwritten documents with multi-page PDF export.</p>
                 </div>
             </a>
-            <a href="https://github.com/Abhishek-0904/resume-building" target="_blank" class="project-card glass"
+            <a href="https://github.com/Abhishek-0904/resume-building" target="_blank" class="project-card glass reveal reveal-delay-2"
                 style="text-decoration: none; color: inherit; display: block;">
                 <div class="project-img">
                     <i class="fas fa-file-invoice"></i>
@@ -201,7 +207,7 @@
                         Features dynamic templates and secure data storage.</p>
                 </div>
             </a>
-            <a href="https://github.com/Abhishek-0904/Whatsapp-clone" target="_blank" class="project-card glass"
+            <a href="https://github.com/Abhishek-0904/Whatsapp-clone" target="_blank" class="project-card glass reveal reveal-delay-3"
                 style="text-decoration: none; color: inherit; display: block;">
                 <div class="project-img">
                     <i class="fab fa-whatsapp"></i>
@@ -217,7 +223,7 @@
                         and a seamless responsive UI.</p>
                 </div>
             </a>
-            <a href="https://github.com/Abhishek-0904/" target="_blank" class="project-card glass"
+            <a href="https://github.com/Abhishek-0904/" target="_blank" class="project-card glass reveal reveal-delay-2"
                 style="text-decoration: none; color: inherit; display: block;">
                 <div class="project-img">
                     <i class="fas fa-shopping-cart"></i>
@@ -233,7 +239,22 @@
                         real-time inventory management.</p>
                 </div>
             </a>
-            <a href="https://github.com/Abhishek-0904/Yatra" target="_blank" class="project-card glass"
+            <a href="https://github.com/Abhishek-0904/" target="_blank" class="project-card glass reveal reveal-delay-3"
+                style="text-decoration: none; color: inherit; display: block;">
+                <div class="project-img">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="project-info">
+                    <div class="project-tech">
+                        <span class="tech-pill">PHP</span>
+                        <span class="tech-pill">Laravel</span>
+                        <span class="tech-pill">MySQL</span>
+                    </div>
+                    <h3>Foodzone</h3>
+                    <p>Premium food ordering and management platform with a sophisticated dashboard, real-time analytics, and glassmorphic design.</p>
+                </div>
+            </a>
+            <a href="https://github.com/Abhishek-0904/Yatra" target="_blank" class="project-card glass reveal reveal-delay-1"
                 style="text-decoration: none; color: inherit; display: block;">
                 <div class="project-img">
                     <i class="fas fa-map-marked-alt"></i>
@@ -249,6 +270,56 @@
                         a dynamic mobile experience and seamless navigation.</p>
                 </div>
             </a>
+        </div>
+    </section>
+
+    <section id="impact" class="container reveal">
+        <div class="section-header">
+            <h2>Recognition & <span class="text-gradient">Impact</span></h2>
+            <p style="text-align: center; color: var(--text-secondary); max-width: 600px; margin: -2rem auto 4rem;">Showcasing my professional milestones and what mentors say about my work.</p>
+        </div>
+        
+        <div class="impact-grid">
+            <div class="impact-stats">
+                <div class="stat-card glass reveal reveal-delay-1">
+                    <span class="stat-number">6+</span>
+                    <span class="stat-label">Featured Projects</span>
+                </div>
+                <div class="stat-card glass reveal reveal-delay-2">
+                    <span class="stat-number">8.77</span>
+                    <span class="stat-label">Current CGPI</span>
+                </div>
+                <div class="stat-card glass reveal reveal-delay-3">
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label">Tech Skills</span>
+                </div>
+                <div class="stat-card glass reveal reveal-delay-1">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Dedication</span>
+                </div>
+            </div>
+
+            <div class="testimonials-container">
+                <div class="testimonial-card glass reveal">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p class="testimonial-text">"Abhishek's ability to integrate AI into traditional web applications like InkFlow is truly impressive. He has a sharp eye for modern UI/UX and a strong grip on full-stack logic."</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <span class="author-name">Project Supervisor</span>
+                            <span class="author-role">R.N.G. Patel Institute</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="achievement-highlights glass reveal reveal-delay-2">
+                    <h3>Key Highlights</h3>
+                    <ul class="highlights-list">
+                        <li><i class="fas fa-award"></i> Top Performer in Software Development Batch</li>
+                        <li><i class="fas fa-check-circle"></i> Successfully built & deployed 5+ Full-stack Apps</li>
+                        <li><i class="fas fa-bolt"></i> Expert in AI Implementation & Prompt Engineering</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
