@@ -36,6 +36,8 @@
     </div>
 
     <div class="bg-blobs">
+        <canvas id="lake-canvas" class="lake-canvas"></canvas>
+        <canvas id="network-canvas" class="network-canvas"></canvas>
         <div class="bg-grid"></div>
         <div class="mouse-glow" id="mouse-glow"></div>
         <div class="blob blob-1"></div>
@@ -87,6 +89,12 @@
                     <a href="#contact" class="btn btn-outline">Contact Me</a>
                 </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="scroll-text">Scroll Down</div>
         </div>
     </section>
 
@@ -393,6 +401,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
     <script src="script.js"></script>
 </body>
 

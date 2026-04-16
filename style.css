@@ -55,8 +55,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+    scroll-behavior: auto !important; /* Managed by Lenis */
 }
 
 body {
@@ -66,6 +65,21 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     cursor: none;
+}
+
+/* Digital Grain Texture Overlay */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: overlay;
 }
 
 /* Custom Cursor */
@@ -100,11 +114,12 @@ body {
 }
 
 .custom-cursor.hover {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background-color: rgba(0, 242, 254, 0.1);
-    border-color: transparent;
-    mix-blend-mode: difference;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-glow);
+    mix-blend-mode: normal;
 }
 
 a, button, .btn, .project-card, .skill-tag, .dot {
@@ -122,14 +137,60 @@ a, button, .btn, .project-card, .skill-tag, .dot {
     overflow: hidden;
 }
 
+.lake-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -5; /* Bottom-most layer */
+    pointer-events: none;
+    opacity: 0.5; /* Slightly more subtle */
+    filter: blur(4px); /* Depth blur */
+}
+
+.network-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -4; /* In front of waves, behind grid */
+    pointer-events: none;
+    opacity: 0.6;
+}
+
 .bg-grid {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-image: 
+        linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
+    mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 40%);
+    -webkit-mask-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 40%);
+    transition: mask-image 0.1s;
+}
+
+.bg-grid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent, rgba(0, 242, 254, 0.05), transparent);
+    height: 10px;
+    width: 100%;
+    animation: gridScan 4s linear infinite;
+}
+
+@keyframes gridScan {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
 }
 
 .mouse-glow {
@@ -189,7 +250,6 @@ a, button, .btn, .project-card, .skill-tag, .dot {
 section {
     padding: 100px 0;
     min-height: 100vh;
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -200,11 +260,17 @@ h2 {
     font-weight: 800;
     margin-bottom: 4rem;
     text-align: center;
-    background: linear-gradient(135deg, #fff 0%, var(--accent-color) 100%);
+    background: linear-gradient(135deg, #fff 0%, var(--accent-color) 50%, #fff 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -2px;
+    animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
 }
 
 .glass {
@@ -388,6 +454,24 @@ nav .container {
     padding: 1.5rem;
     position: relative;
     animation: floating 6s ease-in-out infinite, dropDown 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    overflow: hidden; /* For scanline */
+}
+
+.profile-card::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent, rgba(0, 242, 254, 0.1), transparent);
+    animation: scanProfile 4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanProfile {
+    0% { top: -100%; }
+    100% { top: 100%; }
 }
 
 @keyframes floating {
@@ -504,12 +588,15 @@ nav .container {
 }
 
 .hero-title {
-    font-size: 4.5rem;
+    font-size: 5rem;
     line-height: 1;
     font-weight: 800;
     letter-spacing: -2px;
     margin-bottom: 1.5rem;
     color: #fff;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+    position: relative;
+    z-index: 1;
 }
 
 @media (max-width: 968px) {
@@ -528,6 +615,54 @@ nav .container {
 .hero-btns {
     display: flex;
     gap: 1.5rem;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition-smooth);
+    pointer-events: none;
+}
+
+.mouse {
+    width: 24px;
+    height: 38px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    position: relative;
+    border-color: var(--accent-color);
+}
+
+.wheel {
+    width: 3px;
+    height: 6px;
+    background: var(--accent-color);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 2s infinite;
+}
+
+@keyframes scrollWheel {
+    0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(15px); opacity: 0; }
+}
+
+.scroll-text {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
 }
 
 /* About / Education Section */
@@ -645,6 +780,42 @@ nav .container {
 .project-card {
     overflow: hidden;
     transition: var(--transition-smooth);
+    position: relative; /* For glare */
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 254, 0.15) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+.project-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: skewX(-20deg);
+    transition: 0.6s;
+    pointer-events: none;
+}
+
+.project-card:hover::after {
+    left: 150%;
 }
 
 .project-card:hover {
@@ -713,25 +884,64 @@ nav .container {
 /* Impact & Recognition Section */
 .impact-grid {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 4rem;
-    align-items: start;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    align-items: stretch;
 }
 
 .impact-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    display: contents; /* Allows children to participate in the grid */
 }
 
 .stat-card {
-    padding: 2rem;
+    padding: 2.5rem;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     transition: var(--transition-elastic);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:nth-child(1) { grid-column: span 1; }
+.stat-card:nth-child(2) { grid-column: span 1; }
+.stat-card:nth-child(3) { grid-column: span 1; }
+.stat-card:nth-child(4) { grid-column: span 1; }
+
+.testimonials-container {
+    grid-column: span 2;
+    display: grid;
+    gap: 1.5rem;
+}
+
+@media (max-width: 968px) {
+    .impact-grid {
+        grid-template-columns: 1fr;
+    }
+    .stat-card, .testimonials-container {
+        grid-column: span 1;
+    }
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0.1;
+    animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
 }
 
 .stat-card:hover {
